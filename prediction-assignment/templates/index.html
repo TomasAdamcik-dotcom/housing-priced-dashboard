@@ -152,7 +152,6 @@
                     err = true
                 } else {
                     document.getElementById(id).innerHTML=""
-                    err= false
                 }   
             }
 
@@ -162,7 +161,6 @@
                     err = true
                 } else {
                     document.getElementById(id).innerHTML=""
-                    err= false
                 }
             }
 
@@ -172,7 +170,6 @@
                     err = true
                 } else {
                     document.getElementById(id).innerHTML=""
-                    err= false
                 }
             }
 
@@ -182,7 +179,6 @@
                     err = true
                 } else {
                     document.getElementById(id).innerHTML=""
-                    err= false
                 }
             }
 
@@ -221,7 +217,6 @@
                 throw new Error('Form invalid data input');
             }
 
-
             fetch('{{ url_for("get_prediction") }}?' + new URLSearchParams({
                 longitude: longitude,
                 latitude: latitude,
@@ -256,7 +251,6 @@
 
                 })
                 .catch(function () {
-                    // this.dataError = true;
                 });
         }
 

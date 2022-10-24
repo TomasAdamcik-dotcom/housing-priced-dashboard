@@ -17,10 +17,19 @@ Project is available in 'prediction-assignment' folder.
 8. Added input validations for HTML form
 
 # Used tools and technologies
-- javaScript
-- Python
--- Flask
--- Pandas
--- datetime
--- logging
-- Bootstrap
+1. javaScript
+2. Python
+- Flask
+- Pandas
+- datetime
+- logging
+3. Bootstrap
+
+# Struggles during project
+1. Understanding main.py outputs and which one is the predictions that should be used on the main page. This took me most of the time to figure out.
+2. Using Flask for the first time. I had not an experience with this extension before.
+3. Planning process at the start of project, mainly because of the above two points.
+
+# Learnings
+1. Flask extension for building REST APIs
+2. Elimination process on events happening in main.py, where I had to remove code that was not needed. 
