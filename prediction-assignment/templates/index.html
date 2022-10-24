@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <style>
+        #output {opacity: 0.0;}
+        .incorrect-input{color: red;}
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <H1>Housing price prediction model</H1>
+            <hr>
+            <div class="row">
+                <!-- Input form -->
+                <div class="col">
+                    <div class="mb-3 row">
+                        <div class="col-4">
+                            <label for="longitude" class="form-label">Longitude</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="longitude" placeholder="e.g. 152.75" value="55">
+                            <div class="incorrect-input" id="longitude-validation"></div>
+                        </div>
+
+                    </div>
+        
+                    <div class="mb-3 row">
+                        <div class="col-4">
+                            <label for="latitude" class="form-label">Latitude</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="latitude" placeholder="e.g. -57.8" value=" 33.89">
+                            <div class="incorrect-input" id="latitude-validation"></div>
+                        </div>
+                    </div>
+        
+                    <div class="mb-3 row">
+                        <div class="col-4">
+                            <label for="housing-median-age" class="form-label">Housing median age</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="housing-median-age" value="24.0">
+                            <div class="incorrect-input" id="housing-median-age-validation"></div>
+                        </div>
+                    </div>
+        
+                    <div class="mb-3 row">
+                        <div class="col-4">
+                            <label for="total-rooms" class="form-label">Total rooms</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="total-rooms" value="1332.0">
+                            <div class="incorrect-input" id="total-rooms-validation"></div>
+                        </div>
+                    </div>
+        
+                    <div class="mb-3 row">
+                        <div class="col-4">
+                            <label for="total-bedrooms" class="form-label">Total bedrooms</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="total-bedrooms" value="252.0">
+                            <div class="incorrect-input" id="total-bedrooms-validation"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 row">
+                        <div class="col-4">
+                            <label for="population" class="form-label">Population</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="population" value=" 625.0">
+                            <div class="incorrect-input" id="population-validation"></div>
+                        </div>
+                    </div>
+        
+                    <div class="mb-3 row">
+                        <div class="col-4">
+                            <label for="households" class="form-label">Households</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="households" value="230.0">
+                            <div class="incorrect-input" id="households-validation"></div>
+                        </div>
+                    </div>
+        
+                    <div class="mb-3 row">
+                        <div class="col-4">
+                            <label for="median-income" class="form-label">Median income</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="median-income" value="4.4375">
+                            <div class="incorrect-input" id="median-income-validation"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 row">
+                        <div class="col-4">
+                            <label for="ocean-proximity" class="form-label col">Ocean proximity</label>
+                        </div>
+                        <div class="col-8">
+                            <select id="ocean-proximity" class="form-select col" aria-label="Default select example" placeholder="Select one of the options">
+                                <option value="" disabled hidden selected>Select an option</option>
+                                <option value="<1H OCEAN">&lt;1H Ocean</option>
+                                <option value="INLAND">Inland</option>
+                                <option value="ISLAND">Island</option>
+                                <option value="NEAR BAY">Near Bay</option>
+                                <option value="NEAR OCEAN">Near Ocean</option>
+                            </select>
+                            <div class="incorrect-input" id="ocean-proximity-validation"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- button and output table -->
+                <div class="col">
+                    <button type="submit" onclick="submitData()" class="btn btn-primary">Submit</button>
+                
+                    <table id="output" class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Property cost prediction</th>
+                                <th scope="col">Time stamp of prediction</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script>
+        // https://reqbin.com/code/javascript/rftjizcl/javascript-get-request-example
+        // https://stackoverflow.com/questions/51859358/how-to-read-json-file-with-fetch-in-javascript
+
+        function submitData() {
+
+            // validation functions
+            err = false
+            function longitudeLatitudeValidation (value, id){
+                 if (isNaN(value) || !value || value < -180 || value > 180 ){
+                    document.getElementById(id).innerHTML="Please enter value between -180 and 180."
+                    err = true
+                } else {
+                    document.getElementById(id).innerHTML=""
+                    err= false
+                }   
+            }
+
+            function wholeNumbersValidation (value, id){
+                if (isNaN(value) || !value || value < 1 || !(value%1 == 0)){
+                    document.getElementById(id).innerHTML="Please enter whole number greater than 1."
+                    err = true
+                } else {
+                    document.getElementById(id).innerHTML=""
+                    err= false
+                }
+            }
+
+            function anyNumbersValidation (value, id){
+                if (isNaN(value) || !value || value < 0){
+                    document.getElementById(id).innerHTML="Please enter a number 0 or greater."
+                    err = true
+                } else {
+                    document.getElementById(id).innerHTML=""
+                    err= false
+                }
+            }
+
+            function dropdownValidation(value, id){
+                if (value == ""){
+                    document.getElementById(id).innerHTML="Please select one of the options."
+                    err = true
+                } else {
+                    document.getElementById(id).innerHTML=""
+                    err= false
+                }
+            }
+
+
+
+            // getting values from HTML & validating input
+            let longitude = document.getElementById('longitude').value;
+                longitudeLatitudeValidation(longitude, 'longitude-validation');
+
+            let latitude = document.getElementById('latitude').value;
+                longitudeLatitudeValidation(latitude, 'latitude-validation');
+
+            let housingMedianAge = document.getElementById('housing-median-age').value;
+                wholeNumbersValidation(housingMedianAge, 'housing-median-age-validation');
+
+            let totalRooms = document.getElementById('total-rooms').value;
+                wholeNumbersValidation(totalRooms, 'total-rooms-validation');
+
+            let totalBedrooms = document.getElementById('total-bedrooms').value;
+                wholeNumbersValidation(totalBedrooms, 'total-bedrooms-validation');
+
+            let population = document.getElementById('population').value;
+                wholeNumbersValidation(population, 'population-validation');
+
+            let households = document.getElementById('households').value;
+                wholeNumbersValidation(households, 'households-validation');
+
+            let medianIncome = document.getElementById('median-income').value;
+                anyNumbersValidation (medianIncome, 'median-income-validation')
+
+            let oceanProximity = document.getElementById('ocean-proximity').value;
+                dropdownValidation(oceanProximity,'ocean-proximity-validation' )
+
+
+            if (err){
+                throw new Error('Form invalid data input');
+            }
+
+
+            fetch('{{ url_for("get_prediction") }}?' + new URLSearchParams({
+                longitude: longitude,
+                latitude: latitude,
+                housing_median_age: housingMedianAge,
+                total_rooms: totalRooms,
+                total_bedrooms: totalBedrooms,
+                population: population,
+                households: households,
+                median_income: medianIncome,
+                ocean_proximity: oceanProximity,
+            })).then(response => {
+                    if (!response.ok) {
+                        throw new Error("HTTP error " + response.status);
+                    }
+                    return response.json();
+                })
+                .then(json => {
+                    console.log(json.prediction);
+
+                    let prediction = json.prediction;
+                    let timestamp = json.timestamp;
+
+                    let table = document.getElementById('output');
+                    table.style.opacity = 1.0;
+                    var row = table.insertRow(1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    cell1.innerHTML = prediction.toFixed(2);
+                    cell2.innerHTML = timestamp;
+                    
+
+
+                })
+                .catch(function () {
+                    // this.dataError = true;
+                });
+        }
+
+
+    </script>
+
+</body>
+</html>
+
+
