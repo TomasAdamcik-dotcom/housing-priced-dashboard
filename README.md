@@ -1,5 +1,7 @@
 # DTSE Full-Stack Developer assignment - work process
 
+Project is available in 'prediction-assignment' folder.
+
 ## Work process
 
 1. installed requirements
@@ -14,3 +16,11 @@
 7. Added table to HTML that takes output from prediction model and adds time stamp
 8. Added input validations for HTML form
 
+# Used tools and technologies
+- javaScript
+- Python
+-- Flask
+-- Pandas
+-- datetime
+-- logging
+- Bootstrap
